@@ -177,10 +177,16 @@ top:105px !important;
                     <span class="icon-bar"></span> 
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" th:href="@{/contact}">Spring MyContact</a>
+                <a class="navbar-brand" th:href="@{/market/contact}">Spring MyContact</a>
             </div>
         </div>
     </nav> -->
+    <div th:fragment="cartjs" >
+    	<script src="../js/minicart.min.js"></script>
+    <script>
+    	paypal.minicart.render();
+	</script>
+	</div>
 	<!-- header -->
 	<div class="header" th:fragment="header" >
 		<div class="w3ls-header"><!--header-one--> 
@@ -203,8 +209,9 @@ top:105px !important;
 						 	<div th:attr="data-id=${user.id},data-address=${user.address},data-address=${user.phone}" id="user_id"></div>
 						 	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> My Account<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="login.html" th:text="${user.email}"></a></li>					
-								<li><a href="login.html" >My Orders</a></li>  
+								<!-- tao 1 trang de xem thong tin ca nhan cua nguoi dung -->
+								<li><a th:href="@{/userprop/id}" th:text="${user.email}"></a></li>					
+								<li><a th:href="@{/login}" >My Orders</a></li>  
 								<li><a th:href="@{/logout}">Logout</a></li> 
 							</ul> 
 						 </div>
@@ -213,27 +220,27 @@ top:105px !important;
 					<li class="dropdown head-dpdn">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-percent" aria-hidden="true"></i> Today's Deals<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="offers.html">Cash Back Offers</a></li> 
-							<li><a href="offers.html">Product Discounts</a></li>
-							<li><a href="offers.html">Special Offers</a></li> 
+							<li><a th:href="@{/market/offers}">Cash Back Offers</a></li> 
+							<li><a th:href="@{/market/offers}">Product Discounts</a></li>
+							<li><a th:href="@{/market/offers}">Special Offers</a></li> 
 						</ul> 
 					</li> 
 					<li class="dropdown head-dpdn">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gift" aria-hidden="true"></i> Gift Cards<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="offers.html">Product Gift card</a></li> 
-							<li><a href="offers.html">Occasions Register</a></li>
-							<li><a href="offers.html">View Balance</a></li> 
+							<li><a th:href="@{/market/card}">Product Gift card</a></li> 
+							<li><a th:href="@{/market/card}">Occasions Register</a></li>
+							<li><a th:href="@{/market/card}">View Balance</a></li> 
 						</ul> 
 					</li> 
 					<li class="dropdown head-dpdn">
-						<a href="contact.html" class="dropdown-toggle"><i class="fa fa-map-marker" aria-hidden="true"></i> Store Finder</a>
+						<a th:href="@{/market/contact}" class="dropdown-toggle"><i class="fa fa-map-marker" aria-hidden="true"></i> Store Finder</a>
 					</li> 
 					<li class="dropdown head-dpdn">
-						<a href="card.html" class="dropdown-toggle"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Credit Card</a>
+						<a th:href="@{/market/card}" class="dropdown-toggle"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Credit Card</a>
 					</li> 
 					<li class="dropdown head-dpdn">
-						<a href="help.html" class="dropdown-toggle"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
+						<a th:href="@{/market/help}" class="dropdown-toggle"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
 					</li>
 				</ul>
 			</div>
@@ -242,7 +249,7 @@ top:105px !important;
 		<div class="header-two"><!-- header-two -->
 			<div class="container">
 				<div class="header-logo">
-					<h1><a href="index.html"><span>S</span>uper <i></i></a></h1>
+					<h1><a th:href="@{/market}"><span>S</span>uper <i></i></a></h1>
 					<h6>Your stores. Your place.</h6> 
 				</div>	
 				<div class="header-search">
@@ -255,7 +262,7 @@ top:105px !important;
 				</div>
 				<div class="header-cart"> 
 					<div class="my-account">
-						<a href="contact.html"><i class="fa fa-map-marker" aria-hidden="true"></i> CONTACT US</a>						
+						<a th:href="@{/market/contact}"><i class="fa fa-map-marker" aria-hidden="true"></i> CONTACT US</a>						
 					</div>
 					<div class="cart"> 
  						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="last"> 
@@ -278,12 +285,16 @@ top:105px !important;
 						<nav class="cd-dropdown" id="menu-c2"> 
 							<a href="#0" class="cd-close">Close</a>
 							<ul class="cd-dropdown-content"> 
-								<li><a href="offers.html">Today's Offers</a></li>
+								<li><a th:href="@{/market/offers}">Today's Offers</a></li>
 								<li class="has-children">
 									<a href="#">Electronics</a> 
 									<ul class="cd-secondary-dropdown is-hidden">
 										<li class="go-back"><a href="#">Menu</a></li>
-										<li class="see-all"><a href="products.html">All Electronics</a></li>
+										<!-- link phai thay doi lai
+											th:href="@{/market/products?search=-1-type=1}"
+											-1 khi null, type cua electronic la 1;
+										 -->
+										<li class="see-all"><a th:href="@{/market/products}">All Electronics</a></li>
 										<li class="has-children">
 											<a href="#">MOBILE PHONES</a>  
 											<ul class="is-hidden"> 
