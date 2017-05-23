@@ -82,6 +82,17 @@ $(document).ready(function() {
  
 	}); 
 }); 
+function buyFunction() {
+    var html=""; // biến này để lưu html các thẻ div. các thẻ này chứa id và number của product
+	$(".minicart-item").each(function( index ) {
+		var id=$(this).data("id");
+		var number=$(this).data("number");
+    	//alert("id:"+$(this).data("id")+"_number"+$(this).data("number"));
+    	html+='<li data-id="'+id+'" data-number="'+number+'" > </li>';   
+    });
+   	alert(html);
+   	$("#listProduct").html(html);
+}
 </script>
 <script src="../../js/jquery-scrolltofixed-min.js" type="text/javascript"></script>
 <script>
@@ -133,7 +144,6 @@ $(document).ready(function() {
 	</script>
 	<!-- //smooth-scrolling-of-move-up -->
 	<script src="../../js/bootstrap.js"></script>
-	<script src="../../js/bootstrap.js"></script>
 	<!--flex slider-->
 	<script src="../../js/jquery.flexslider.js"></script>
 	<link rel="stylesheet" href="../../css/flexslider.css" type="text/css" media="screen" />
@@ -148,6 +158,11 @@ $(document).ready(function() {
 	</script>
 	<!--flex slider-->
 	<script src="../../js/imagezoom.js"></script>
+<style>
+#PPminiCart{
+top:105px !important;
+}
+</style>
 </head>
 <body>
     <!-- <nav th:fragment="header"
@@ -175,13 +190,25 @@ $(document).ready(function() {
 			<div class="w3ls-header-right">
 				<ul>
 					<li class="dropdown head-dpdn">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> My Account<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="login.html">Login </a></li> 
-							<li><a href="signup.html">Sign Up</a></li> 
-							<li><a href="login.html">My Orders</a></li>  
-							<li><a href="login.html">Wallet</a></li> 
-						</ul> 
+					<div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+						<div th:case="${false}">
+							<div data-id="-1" id="user_id" data-address="-1" data-phone="-1"></div>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> My Account<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/login}"  id="username">Login </a></li> 
+								<li><a th:href="@{/signup}">Sign Up</a></li>
+							</ul>
+						</div>
+						 <div th:case="${true}">
+						 	<div th:attr="data-id=${user.id},data-address=${user.address},data-address=${user.phone}" id="user_id"></div>
+						 	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> My Account<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="login.html" th:text="${user.email}"></a></li>					
+								<li><a href="login.html" >My Orders</a></li>  
+								<li><a th:href="@{/logout}">Logout</a></li> 
+							</ul> 
+						 </div>
+					</div>
 					</li> 
 					<li class="dropdown head-dpdn">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-percent" aria-hidden="true"></i> Today's Deals<span class="caret"></span></a>
@@ -219,9 +246,9 @@ $(document).ready(function() {
 					<h6>Your stores. Your place.</h6> 
 				</div>	
 				<div class="header-search">
-					<form action="#" method="post">
-						<input type="search" name="Search" placeholder="Search for a Product..." required=""></input>
-						<button type="submit" class="btn btn-default" aria-label="Left Align">
+					<form action="#" method="POST" id="form_searchproduct" name="form_searchproduct">
+						<input type="search" name="keysearchproduct" id="keysearchproduct" placeholder="Search for a Product..." required="" ></input>
+						<button type="submit" name="btnsearchproduct" id="btnsearchproduct" class="btn btn-default" aria-label="Left Align">
 							<i class="fa fa-search" aria-hidden="true"> </i>
 						</button>
 					</form>
@@ -231,11 +258,12 @@ $(document).ready(function() {
 						<a href="contact.html"><i class="fa fa-map-marker" aria-hidden="true"></i> CONTACT US</a>						
 					</div>
 					<div class="cart"> 
-						<form action="#" method="post" class="last"> 
+ 						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="last"> 
 							<input type="hidden" name="cmd" value="_cart" />
 							<input type="hidden" name="display" value="1" />
 							<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-						</form>  
+						</form>   
+						
 					</div>
 					<div class="clearfix"> </div> 
 				</div> 
@@ -246,8 +274,8 @@ $(document).ready(function() {
 			<div class="container">
 				<div class="menu">
 					<div class="cd-dropdown-wrapper">
-						<a class="cd-dropdown-trigger" href="#0">Store Categories</a>
-						<nav class="cd-dropdown"> 
+						<a class="cd-dropdown-trigger" href="#" id="menu-c1">Store Categories</a>
+						<nav class="cd-dropdown" id="menu-c2"> 
 							<a href="#0" class="cd-close">Close</a>
 							<ul class="cd-dropdown-content"> 
 								<li><a href="offers.html">Today's Offers</a></li>
@@ -1166,27 +1194,6 @@ $(document).ready(function() {
 		<div class="container">
 			<p>© 2016 Smart bazaar . All rights reserved | Design by <a href="http://w3layouts.com"> W3layouts.</a></p>
 		</div>
-	</div>
-	<!--  //copy-right-->
-		<!-- cart-js -->
-	<script src="../js/minicart.js"></script>
-<!-- 	<script>
-        w3ls.render();
-
-        w3ls.cart.on('w3sb_checkout', function (evt) {
-        	var items, len, i;
-
-        	if (this.subtotal() > 0) {
-        		items = this.items();
-
-        		for (i = 0, len = items.length; i < len; i++) {
-        			items[i].set('shipping', 0);
-        			items[i].set('shipping2', 0);
-        		}
-        	}
-        });
-    </script>  --> 
-	<!-- //cart-js -->	
 	<!-- countdown.js -->	
 	<script src="../../js/jquery.knob.js"></script>
 	<script src="../../js/jquery.throttle.js"></script>
@@ -1253,5 +1260,143 @@ $(document).ready(function() {
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster --> 
 	
+	</div>
+	<!--  //copy-right-->
+	<!-- popup nhập thông tin khi mua hàng -->
+  	<div class="modal fade" id="buyModal" role="dialog" th:fragment="popup-pay">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Xác nhận đơn hàng</h4>
+        </div>
+        <div class="modal-body">
+        	<div id="modal-body-list-products"></div>
+          	<div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+				<div th:case="${false}">
+					<p>Nhập địa chỉ nhận hàng</p><br />
+					<input type="text" class="form-control" id="re-address" placeholder="Nhập địa chỉ"/>
+					<p>NHập SDT người nhận</p><br />
+					<input type="text" class="form-control" id="re-phone" placeholder="Nhập SDT"/>
+				</div>
+				<div th:case="${true}">
+					<p>Địa chỉ nhận hàng</p><br />
+					<select class="form-control" onchange="changeAddress(value);">
+				  		<option value="0" th:text="${user.address}" id="address-default"></option>
+				  		<option value="1">Địa Chỉ Khác...</option>
+					</select>
+					<br />
+					<input type="hidden" class="form-control" id="re-address" placeholder="Nhập địa chỉ mới vào "/>
+					<script type="text/javascript">
+					var address="";
+						function changeAddress($i) {
+						    if($i==0){
+						    	$("#re-address").attr("type","hidden");
+						    	$("#re-address").val(document.getElementById("address-default").innerHTML);
+						    	
+						    }else{
+						    	$("#re-address").attr("type","text");
+						    }
+						}
+					</script>
+					<br />
+					<p>SDT người nhận</p><br />
+					<select class="form-control" onchange="changePhone(value);">
+				  		<option value="0" th:text="${user.phone}" id="phone-default"></option>
+				  		<option value="1">SDT Khác...</option>
+					</select>
+					<script type="text/javascript">
+					var phone="";
+						function changePhone($i) {
+						    if($i==0){
+						    	$("#re-phone").attr("type","hidden");
+						    	$("#re-phone").val(document.getElementById("phone-default").innerHTML);
+						    }else{
+						    	$("#re-phone").attr("type","text");
+						    }
+						}
+					</script>
+					<br />
+					<input type="hidden" class="form-control" id="re-phone" placeholder="Nhập SDT khác vào đây"/>
+					<br />
+				</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="SubmitBuyFunction()" >Xác Nhận</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <div id="listProduct" style="display: none;" data-num="0">
+          	<!-- thẻ div này dùng để lưu danh sách products -->
+          </div>
+          <script>
+          		function SubmitBuyFunction() {
+          			var useremail=$("#username").text();
+          			//set val of input to address default
+          			$("#re-address").val(document.getElementById("address-default").innerHTML);
+          			//set val of input to address default
+          			$("#re-phone").val(document.getElementById("phone-default").innerHTML);
+          			//script xu li nut mua hang
+          			var isLogin=parseInt($("#user_id").attr("data-id"));// isLogin đồng thời cũng là user_id logged
+         
+          			//var numloop=parseInt($("#listProduct").attr("data-num"));
+          			$("#listProduct li").each(function() {
+          				//guwir ajax cho nay qua controller
+          				//ajax gui di id user(neu co).phone/diachi,..
+          					//id-product,num-product. co the lay thi $("this").data("id/number")
+          				//controller se them vao bang order -chu y:de state la dang duyet
+          		    	//chu y: moi lan gui se goi ham them. ko can luu array . chi gui thuoc tinh          			
+          		    	
+          		    	var idProduct=$(this).attr("data-id");
+          		    	var numberProduct=$(this).attr("data-number");
+          		    	
+          		    	console.log("id user: "+isLogin);
+          		    	console.log("id product: " + idProduct);
+          		    	console.log("number product: "+numberProduct);
+          		    	console.log("address: "+ $("#re-address").val());
+          		    	console.log("phone: "+ $("#re-phone").val());
+          		    	//test complete
+          		    	//send ajax to add the "order" table with each li(each product)
+          		    	var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+						var csrfToken = $("meta[name='_csrf']").attr("content"); 
+						var csrfHeader = $("meta[name='_csrf_header']").attr("content");  // THIS WAS ADDED
+						var order = {};
+						    order["idUser"] = 1;
+							order["idProduct"] = 2;
+						    //search["email"] = $("#email").val();
+						var data={};
+						    data[csrfParameter] = csrfToken;
+						data["institutionId"] = 1;
+						var headers ={};
+						headers[csrfHeader] = csrfToken;    // THIS WAS ADDED
+						    $.ajax({
+						        type: "POST",
+						        //contentType: "application/json",
+						        url: "/api/addOrder",
+						        headers: headers,    // THIS WAS ADDED
+						        data: {},//"institutionId=" + option,
+						        //data: JSON.stringify(data),
+						        //dataType: 'json',
+						        dataType:"text",
+						        success: function (data) {
+						            console.log("SUCCESS");
+						        },
+						        error: function (e) {
+						            console.log("ERROR :", e);
+						        }
+						    });
+//
+          		    	
+          			});
+				}
+          </script>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<!--  -->
 </body>
 </html>

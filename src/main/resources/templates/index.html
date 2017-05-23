@@ -45,6 +45,10 @@
 		<script src="js/custom.js"></script>
 	</div>
 	<!-- //banner -->  
+	<script src="../js/minicart.min.js"></script>
+    <script>
+    	paypal.minicart.render();
+	</script>
 	<!-- welcome -->
 	<div class="welcome"> 
 		<div class="container"> 
@@ -1009,5 +1013,6 @@
     <!--  copy-right-->
     <div th:replace="layout :: copy-right"></div>
 	<!--  //copy-right-->
+	<div th:replace="layout :: popup-pay"></div>
 </body>
 </html>

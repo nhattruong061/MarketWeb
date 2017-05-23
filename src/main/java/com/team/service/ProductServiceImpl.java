@@ -45,6 +45,11 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return  productRepository.findTop10ByType(id);
 	}
+
+	@Override
+	public List<Product> findByPriceThan(int lessPrice, int greaterPrice) {
+		return productRepository.findByPriceLessThanEqualAndPriceGreaterThan(lessPrice, greaterPrice);
+	}
     
     /*@Override
     public Product findByID_a(int id){

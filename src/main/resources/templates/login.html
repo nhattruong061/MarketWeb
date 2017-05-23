@@ -26,7 +26,11 @@
 		<div class="container"> 
 			<h3 class="w3ls-title w3ls-title1">Login to your account</h3>  
 			<div class="login-body">
-				<form action="#" method="post">
+		
+		<p th:if="${param.error}" class="error">Invalid email or password</p>
+        <p th:if="${param.logout}" class="success">You have been logged out</p>
+		
+				<form th:action="@{/test/login}" method="POST">
 					<input type="text" class="user" name="email" placeholder="Enter your email" required="" ></input>
 					<input type="password" name="password" class="lock" placeholder="Password" required="" ></input>
 					<input type="submit" value="Login"></input>
@@ -38,6 +42,7 @@
 						<div class="clearfix"> </div>
 					</div>
 				</form>
+				
 			</div>  
 			<h6> Not a Member? <a href="signup.html">Sign Up Now »</a> </h6> 
 			<div class="login-page-bottom social-icons">

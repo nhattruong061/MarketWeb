@@ -39,14 +39,14 @@ $('.toggle-btn').on('click', function (e) {
 								<label for="focusedinput" class="col-sm-2 control-label">Name</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control1" name="name" id="name" placeholder="Default Input" th:field="*{name}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></em>
+									<em th:if="*{#fields.hasErrors('name')}" th:errors="*{name}"></em>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="focusedinput" class="col-sm-2 control-label">Price</label>
 								<div class="col-sm-8">
 									<input type="number" class="form-control1" name="price" id="price" placeholder="Default Input" th:field="*{price}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></em>
+									<em th:if="*{#fields.hasErrors('price')}" th:errors="*{price}"></em>
 								</div>
 							</div>
 							<div class="form-group">
@@ -54,9 +54,9 @@ $('.toggle-btn').on('click', function (e) {
 								<div class="col-sm-8">
 									<select name="price_unit" id="price_unit" class="form-control1" th:field="*{price_unit}" th:errorclass="field-error">
 										<option value="1">VNĐ</option>
-										<option value="2">$</option>
+										<option value="2">*</option>
 									</select>
-									<em th:if="${#fields.hasErrors('price_unit')}" th:errors="*{price_unit}"></em>
+									<em th:if="*{#fields.hasErrors('price_unit')}" th:errors="*{price_unit}"></em>
 								</div>
 							</div>
 							<div class="form-group">
@@ -66,19 +66,17 @@ $('.toggle-btn').on('click', function (e) {
 										<option value="1">Linh kiện</option>
 										<option value="2">Trang trí</option>
 									</select>
-									<em th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></em>
+									<em th:if="*{#fields.hasErrors('type')}" th:errors="*{type}"></em>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="selector1" class="col-sm-2 control-label">Sale</label>
 								<div class="col-sm-8">
 									<select name="is_sale" id="is_sale" class="form-control1" th:field="*{is_sale}" th:errorclass="field-error">
-										<option value="1">10%</option>
-										<option value="2">20%</option>
-										<option value="3">30%</option>
-										<option value="4">40%</option>
+										<option value="0">No</option>
+										<option value="1">Yes</option>
 									</select>
-									<em th:if="${#fields.hasErrors('is_sale')}" th:errors="*{is_sale}"></em>
+									<em th:if="*{#fields.hasErrors('is_sale')}" th:errors="*{is_sale}"></em>
 								</div>
 							</div>
 							<div class="form-group">
@@ -88,14 +86,14 @@ $('.toggle-btn').on('click', function (e) {
 										<option value="1">Yes</option>
 										<option value="2">No</option>
 									</select>
-									<em th:if="${#fields.hasErrors('is_offer')}" th:errors="*{is_offer}"></em>
+									<em th:if="*{#fields.hasErrors('is_offer')}" th:errors="*{is_offer}"></em>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="focusedinput" class="col-sm-2 control-label">Coupon</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control1" id="focusedinput" placeholder="Default Input" th:field="*{id_coupon}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('id_coupon')}" th:errors="*{id_coupon}"></em>
+									<em th:if="*{#fields.hasErrors('id_coupon')}" th:errors="*{id_coupon}"></em>
 								</div>
 							</div>
 							<div class="form-group">
@@ -103,7 +101,7 @@ $('.toggle-btn').on('click', function (e) {
 								<div class="col-sm-8">
 									<textarea name="description" id="description" cols="50" rows="4" class="form-control1" th:field="*{description}" th:errorclass="field-error">
 									</textarea>
-									<em th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></em>
+									<em th:if="*{#fields.hasErrors('description')}" th:errors="*{description}"></em>
 								</div>
 							</div>
 							<div class="form-group">
@@ -111,7 +109,7 @@ $('.toggle-btn').on('click', function (e) {
 								<div class="col-sm-8">
 									<textarea name="processing_time" id="processing_time" cols="50" rows="4" class="form-control1" th:field="*{processing_time}" th:errorclass="field-error">
 									</textarea>
-									<em th:if="${#fields.hasErrors('processing_time')}" th:errors="*{processing_time}"></em>
+									<em th:if="*{#fields.hasErrors('processing_time')}" th:errors="*{processing_time}"></em>
 								</div>
 							</div>
 							<div class="form-group">
@@ -119,7 +117,7 @@ $('.toggle-btn').on('click', function (e) {
 								<div class="col-sm-8">
 									<textarea name="addtional_info" id="addtional_info" cols="50" rows="4" class="form-control1" th:field="*{addtional_info}" th:errorclass="field-error">
 									</textarea>
-									<em th:if="${#fields.hasErrors('addtional_info')}" th:errors="*{addtional_info}"></em>
+									<em th:if="*{#fields.hasErrors('addtional_info')}" th:errors="*{addtional_info}"></em>
 								</div>
 							</div>
 							<input type="hidden" th:field="*{created}" name="created" id="created" />
@@ -128,7 +126,7 @@ $('.toggle-btn').on('click', function (e) {
 								<label for="focusedinput" class="col-sm-2 control-label">Images</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control1" name="images" id="images" placeholder="Default Input" th:field="*{images}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('images')}" th:errors="*{images}"></em>
+									<em th:if="*{#fields.hasErrors('images')}" th:errors="*{images}"></em>
 									<div style="height: 5px;"></div>
 									<input type="hidden" name="extraField"/>
 									<input type="file" name="files" multiple="multiple" />
@@ -140,7 +138,7 @@ $('.toggle-btn').on('click', function (e) {
 								<label for="focusedinput" class="col-sm-2 control-label">Main Image</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control1" name="main_image" id="main_image" placeholder="Default Input" th:field="*{main_image}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('main_image')}" th:errors="*{name}"></em>
+									<em th:if="*{#fields.hasErrors('main_image')}" th:errors="*{name}"></em>
 								</div>
 							</div>
 						  	<div class="panel-footer">

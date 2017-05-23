@@ -13,8 +13,8 @@ import com.team.domain.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	List<Product> findByNameContaining(String q);
-	
+	//tim 10 phan tu dau theo kieu
 	List<Product> findTop10ByType(int id);
-	/*	@Query("select product from product product where product.id= :id")
-	Product findByID_a(@Param("id") int id);*/
+	//tim cac object thoa man dieu kien cua price
+	List<Product> findByPriceLessThanEqualAndPriceGreaterThan(int lessPrice, int greaterPrice);
 }

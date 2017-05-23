@@ -11,8 +11,10 @@ public interface ProductService {
     Iterable<Product> findAll();
 
     List<Product> search(String q);
-    
+    //lay 10 phan tu dau theo kieu
     List<Product> findTop10ByType(int id);
+    //lay object theo khoang price
+    List<Product> findByPriceThan(int lessPrice, int greaterPrice);
     
     Product findOne(int id);
 

@@ -45,7 +45,7 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public Sale findByIdproduct(int id) throws Exception{
+	public Sale findByIdproduct(int id){
 		// TODO Auto-generated method stub
 		return saleRepository.findByIdproduct(id) ;
 	}

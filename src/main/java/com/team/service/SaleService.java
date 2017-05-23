@@ -12,7 +12,7 @@ public interface SaleService {
 
 	    Sale findOne(int id);
 	    
-	    Sale findByIdproduct(int id) throws Exception;
+	    Sale findByIdproduct(int id);
 
 	    void save(Sale sale);
 

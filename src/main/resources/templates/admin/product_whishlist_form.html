@@ -39,21 +39,21 @@ $('.toggle-btn').on('click', function (e) {
 								<label for="focusedinput" class="col-sm-2 control-label">ID Product</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control1" name="id_product" id="id_product" placeholder="Default Input" th:field="*{id_product}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('id_product')}" th:errors="*{id_product}"></em>
+									<em th:if="*{#fields.hasErrors('id_product')}" th:errors="*{id_product}"></em>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="focusedinput" class="col-sm-2 control-label">ID User</label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control1" name="id_user" id="id_user" placeholder="Default Input" th:field="*{id_user}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('id_user')}" th:errors="*{id_user}"></em>
+									<em th:if="*{#fields.hasErrors('id_user')}" th:errors="*{id_user}"></em>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="focusedinput" class="col-sm-2 control-label">IS_Whishlist</label>
 								<div class="col-sm-8">
 									<input type="text" maxlength="2" class="form-control1" name="is_whishlist" id="is_whishlist" placeholder="Default Input" th:field="*{is_whishlist}" th:errorclass="field-error"/>
-									<em th:if="${#fields.hasErrors('is_whishlist')}" th:errors="*{is_whishlist}"></em>
+									<em th:if="*{#fields.hasErrors('is_whishlist')}" th:errors="*{is_whishlist}"></em>
 								</div>
 							</div>
 							<input type="hidden" th:field="*{created}" name="created" id="created" />
