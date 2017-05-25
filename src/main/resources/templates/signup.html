@@ -5,6 +5,18 @@
     <nav th:replace="layout :: header"></nav>
 	<!-- container -->
 		<!-- //sign up-page --> 
+		<form th:action="@{/market/signup}" method="POST">
+					<input type="text" class="user" name="email" placeholder="Enter your email" required="" ></input>
+					<input type="password" name="password" class="lock" placeholder="Password" required="" ></input>
+					<input type="submit" value="Signup"></input>
+					<div class="forgot-grid"><!-- 
+						<label class="checkbox"><input type="checkbox" name="checkbox" ></input><i></i>Remember me</label> -->
+						<div class="forgot">
+							<a href="#">Forgot Password?</a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</form>
 	<!-- footer-top -->
 	<div class="w3agile-ftr-top">
 		<div class="container">

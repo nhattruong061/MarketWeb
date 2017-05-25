@@ -1288,9 +1288,9 @@ top:105px !important;
           	<div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
 				<div th:case="${false}">
 					<p>Nhập địa chỉ nhận hàng</p><br />
-					<input type="text" class="form-control" id="re-address" placeholder="Nhập địa chỉ"/>
+					<input type="text" class="form-control" id="re-address" placeholder="Nhập địa chỉ" required=""/>
 					<p>NHập SDT người nhận</p><br />
-					<input type="text" class="form-control" id="re-phone" placeholder="Nhập SDT"/>
+					<input type="text" class="form-control" id="re-phone" placeholder="Nhập SDT" required=""/>
 				</div>
 				<div th:case="${true}">
 					<p>Địa chỉ nhận hàng</p><br />
@@ -1299,7 +1299,7 @@ top:105px !important;
 				  		<option value="1">Địa Chỉ Khác...</option>
 					</select>
 					<br />
-					<input type="hidden" class="form-control" id="re-address" placeholder="Nhập địa chỉ mới vào "/>
+					<input type="hidden" class="form-control" id="re-address" placeholder="Nhập địa chỉ mới vào " required=""/>
 					<script type="text/javascript">
 					var address="";
 						function changeAddress($i) {
@@ -1330,7 +1330,7 @@ top:105px !important;
 						}
 					</script>
 					<br />
-					<input type="hidden" class="form-control" id="re-phone" placeholder="Nhập SDT khác vào đây"/>
+					<input type="hidden" class="form-control" id="re-phone" placeholder="Nhập SDT khác vào đây" required="true"/>
 					<br />
 				</div>
 			</div>
@@ -1395,7 +1395,12 @@ top:105px !important;
 						        dataType:"text",
 						        success: function (data) {
 						            console.log("SUCCESS");
-						            window.location.replace("/market/order");
+						            if(data>=0){
+						            	window.location.replace("/market/order");
+						            }else{
+						            	window.location.replace("/market/order_guest");
+						            	document.getElementById("thongbao_order_page").innerHTML="Mua hàng dễ dàng hơn-Đăng kí Ngay";
+						            }
 						        },
 						        error: function (e) {
 						            console.log("ERROR :", e);

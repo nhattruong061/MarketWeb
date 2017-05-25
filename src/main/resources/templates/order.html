@@ -15,6 +15,9 @@
 		</th:block>
 		
         <th:block th:unless="${#lists.isEmpty(orders)}">
+        <br></br>
+        <h3 th:text="${thongbao}"></h3>
+        <br></br>
             <div class="row">
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -35,7 +38,7 @@
                             <td th:text="${order.address}"></td>
                             <td th:text="${order.phone}"></td>
                             <td th:text="${order.state}"></td>
-                            <td><a th:href="@{/market/delete_order/{id}(id=${order.idProduct})}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            <td><a th:href="@{/market/delete_order_guest/{id}(id=${order.id})}"><span class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -69,10 +72,15 @@
     </div>
         </th:block>
     </div>
+    	<script src="../js/minicart.min.js"></script>
+    <script>
+    	paypal.minicart.render();
+	</script>
     <!-- /.container -->
 	<div th:replace="layout :: footer-top"></div>
 	<div th:replace="layout :: subscribe"></div>
     <footer th:replace="layout :: footer"></footer>
     <div th:replace="layout :: copy-right"></div>
+    <div th:replace="layout :: popup-pay"></div>
 </body>
 </html>
