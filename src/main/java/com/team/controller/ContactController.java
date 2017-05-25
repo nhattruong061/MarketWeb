@@ -120,11 +120,6 @@ public class ContactController {
     	User u=userDetailsService.findByEmail(name);
     	return u;
     }
-    @GetMapping("/market")
-    public String index(Model model) {
-    	model.addAttribute("user", getUserLogin());
-        return "index";
-    }
     
     @GetMapping("/market/create")
     public String create(Model model) {

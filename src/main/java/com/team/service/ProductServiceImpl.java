@@ -50,6 +50,16 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> findByPriceThan(int lessPrice, int greaterPrice) {
 		return productRepository.findByPriceLessThanEqualAndPriceGreaterThan(lessPrice, greaterPrice);
 	}
+
+	@Override
+	public List<Product> findTop8ByTypeOrderByViewDesc(int id) {
+		return  productRepository.findTop8ByTypeOrderByViewDesc(id);
+	}
+
+/*	@Override
+	public List<Product> findTop8ByViewDesc() {
+		return productRepository.findTop8ByViewDesc();
+	}*/
     
     /*@Override
     public Product findByID_a(int id){

@@ -1294,7 +1294,7 @@ top:105px !important;
 				</div>
 				<div th:case="${true}">
 					<p>Địa chỉ nhận hàng</p><br />
-					<select class="form-control" onchange="changeAddress(value);">
+					<select class="form-control" onchange="changeAddress(value);" id="select_address">
 				  		<option value="0" th:text="${user.address}" id="address-default"></option>
 				  		<option value="1">Địa Chỉ Khác...</option>
 					</select>
@@ -1314,7 +1314,7 @@ top:105px !important;
 					</script>
 					<br />
 					<p>SDT người nhận</p><br />
-					<select class="form-control" onchange="changePhone(value);">
+					<select class="form-control" onchange="changePhone(value);" id="select_phone">
 				  		<option value="0" th:text="${user.phone}" id="phone-default"></option>
 				  		<option value="1">SDT Khác...</option>
 					</select>
@@ -1345,9 +1345,14 @@ top:105px !important;
           		function SubmitBuyFunction() {
           			var useremail=$("#username").text();
           			//set val of input to address default
-          			$("#re-address").val(document.getElementById("address-default").innerHTML);
+          			if($("#select_address option:selected").val()==0){
+          				$("#re-address").val(document.getElementById("address-default").innerHTML);
+          			}
+          			
           			//set val of input to address default
-          			$("#re-phone").val(document.getElementById("phone-default").innerHTML);
+          			if($("#select_phone option:selected").val()==0){
+          				$("#re-phone").val(document.getElementById("phone-default").innerHTML);
+          			}
           			//script xu li nut mua hang
           			var isLogin=parseInt($("#user_id").attr("data-id"));// isLogin đồng thời cũng là user_id logged
          
@@ -1390,6 +1395,7 @@ top:105px !important;
 						        dataType:"text",
 						        success: function (data) {
 						            console.log("SUCCESS");
+						            window.location.replace("/market/order");
 						        },
 						        error: function (e) {
 						            console.log("ERROR :", e);

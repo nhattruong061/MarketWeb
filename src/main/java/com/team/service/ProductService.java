@@ -13,6 +13,9 @@ public interface ProductService {
     List<Product> search(String q);
     //lay 10 phan tu dau theo kieu
     List<Product> findTop10ByType(int id);
+    List<Product> findTop8ByTypeOrderByViewDesc(int id);
+    //List<Product> findTop8ByViewDesc();
+    
     //lay object theo khoang price
     List<Product> findByPriceThan(int lessPrice, int greaterPrice);
     
