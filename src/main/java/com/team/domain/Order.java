@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orderUser")
 public class Order implements Serializable{
 	
 	 private static final long serialVersionUID = 1L;
@@ -20,14 +20,14 @@ public class Order implements Serializable{
 	 @Column(name = "id")
 	 private int id;
 	 
-	 @Column(name = "idproduct")
-	 private int idproduct;
+	 @Column(name = "idProduct")
+	 private String idProduct;
 	 
-	 @Column(name = "numberproduct")
-	 private int numberproduct;
+	 @Column(name = "numberProduct")
+	 private int numberProduct;
 	 
-	 @Column(name = "iduser")
-	 private int iduser;
+	 @Column(name = "idUser")
+	 private int idUser;
 	 
 	 @Column(name = "address")
 	 private String address;
@@ -36,7 +36,7 @@ public class Order implements Serializable{
 	 private String phone;
 	 
 	 @Column(name = "state")
-	 private String state;
+	 private int state;
 	 
 	 @Column(name = "created")
 	 private String created;
@@ -48,13 +48,26 @@ public class Order implements Serializable{
 		 super();
 	}
 
-	public Order(int id, int idProduct, int numberProduct, int idUser, String address, String phone, String state,
+	public Order(int id, String idProduct, int numberProduct, int idUser, String address, String phone, int state,
 			String created, String modified) {
 		super();
 		this.id = id;
-		this.idproduct = idProduct;
-		this.numberproduct = numberProduct;
-		this.iduser = idUser;
+		this.idProduct = idProduct;
+		this.numberProduct = numberProduct;
+		this.idUser = idUser;
+		this.address = address;
+		this.phone = phone;
+		this.state = state;
+		this.created = created;
+		this.modified = modified;
+	}
+	
+	public Order( String idProduct, int numberProduct, int idUser, String address, String phone, int state,
+			String created, String modified) {
+		super();
+		this.idProduct = idProduct;
+		this.numberProduct = numberProduct;
+		this.idUser = idUser;
 		this.address = address;
 		this.phone = phone;
 		this.state = state;
@@ -70,28 +83,28 @@ public class Order implements Serializable{
 		this.id = id;
 	}
 
-	public int getIdProduct() {
-		return idproduct;
+	public String getIdProduct() {
+		return idProduct;
 	}
 
-	public void setIdProduct(int idProduct) {
-		this.idproduct = idProduct;
+	public void setIdProduct(String idProduct) {
+		this.idProduct = idProduct;
 	}
 
 	public int getNumberProduct() {
-		return numberproduct;
+		return numberProduct;
 	}
 
 	public void setNumberProduct(int numberProduct) {
-		this.numberproduct = numberProduct;
+		this.numberProduct = numberProduct;
 	}
 
 	public int getIdUser() {
-		return iduser;
+		return idUser;
 	}
 
 	public void setIdUser(int idUser) {
-		this.iduser = idUser;
+		this.idUser = idUser;
 	}
 
 	public String getAddress() {
@@ -110,11 +123,11 @@ public class Order implements Serializable{
 		this.phone = phone;
 	}
 
-	public String getState() {
+	public int getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 

@@ -28,6 +28,10 @@ public class OrderServiceImpl implements OrderService {
     public void save(Order order) {
     	orderRepository.save(order);
     }
+    
+    public void AddOrder(Order order) {
+    	orderRepository.save(order);
+    }
 
     @Override
     public void delete(int id) {
@@ -35,8 +39,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByIduser(int id) {
-        return orderRepository.findByIduser(id);
+    public List<Order> findAllByIdUser(int id) {
+        return orderRepository.findAllByIdUser(id);
     }
     
     

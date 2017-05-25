@@ -11,44 +11,32 @@
 	    </div> -->
     	
     	<th:block th:if="${#lists.isEmpty(orders)}">
-		    <h3>No orders</h3>
+		    <h3>No Result</h3>
 		</th:block>
 		
         <th:block th:unless="${#lists.isEmpty(orders)}">
-            <div class="row">
-                <a th:href="@{/market/products}" class="btn btn-success pull-left">
-                	<span class="glyphicon glyphicon-plus"></span> By more Something
-               	</a>
-                <form class="form-inline pull-right" action="#" th:action="@{/contact/search}" method="GET">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="q" 
-                            placeholder="Type contact name..." />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-            </div>
             <div class="row">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th>ID Product</th>
+                            <th>Quantity bought</th>
+                            <th>Address</th>
                             <th>Phone</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>State</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="order,iterStat : ${orders}">
                             <td th:text="${iterStat.count}"></td>
-<!--                             <td th:text="${contact.id_Product}"></td>
-                            <td th:text="${contact.numberProduct}"></td>
-                            <td th:text="${contact.address}"></td>
-                            <td th:text="${contact.phone}"></td> -->
-                            <<!-- td><a th:href="@{/contact/{id}/edit(id=${contact.id})}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            <td><a th:href="@{/contact/{id}/delete(id=${contact.id})}"><span class="glyphicon glyphicon-trash"></span></a></td>
-                         --></tr>
+                            <td><img th:src="${'../../uploads/' + order.idProduct}" alt="product_img" width="250"/></td>
+                            <td th:text="${order.numberProduct}"></td>
+                            <td th:text="${order.address}"></td>
+                            <td th:text="${order.phone}"></td>
+                            <td th:text="${order.state}"></td>
+                            <td><a th:href="@{/market/delete_order/{id}(id=${order.idProduct})}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -59,6 +47,5 @@
 	<div th:replace="layout :: subscribe"></div>
     <footer th:replace="layout :: footer"></footer>
     <div th:replace="layout :: copy-right"></div>
-    <div th:replace="layout :: popup-pay"></div>
 </body>
 </html>

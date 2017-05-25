@@ -13,7 +13,7 @@ import com.team.domain.Order;
 
 public interface OrderRepository extends CrudRepository<Order, Integer> {
 
-	List<Order> findByIduser(int id);
+	List<Order> findAllByIdUser(int id);
 
 	List<Order> findTop10ById(int id);
 

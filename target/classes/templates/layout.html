@@ -211,7 +211,7 @@ top:105px !important;
 							<ul class="dropdown-menu">
 								<!-- tao 1 trang de xem thong tin ca nhan cua nguoi dung -->
 								<li><a th:href="@{/userprop/id}" th:text="${user.email}"></a></li>					
-								<li><a th:href="@{/login}" >My Orders</a></li>  
+								<li><a th:href="@{/market/order}" >My Orders</a></li>  
 								<li><a th:href="@{/logout}">Logout</a></li> 
 							</ul> 
 						 </div>
@@ -1373,22 +1373,20 @@ top:105px !important;
 						var csrfToken = $("meta[name='_csrf']").attr("content"); 
 						var csrfHeader = $("meta[name='_csrf_header']").attr("content");  // THIS WAS ADDED
 						var order = {};
-						    order["idUser"] = 1;
-							order["idProduct"] = 2;
+						//phai tao du cac thong tin
+							order["idProduct"] = idProduct;
+							order["numberProduct"] = numberProduct;
+							order["idUser"] = isLogin;
+							order["address"] = $("#re-address").val();
+							order["phone"] = $("#re-phone").val();
 						    //search["email"] = $("#email").val();
-						var data={};
-						    data[csrfParameter] = csrfToken;
-						data["institutionId"] = 1;
-						var headers ={};
-						headers[csrfHeader] = csrfToken;    // THIS WAS ADDED
 						    $.ajax({
 						        type: "POST",
-						        //contentType: "application/json",
+						        contentType: "application/json",
 						        url: "/api/addOrder",
-						        headers: headers,    // THIS WAS ADDED
-						        data: {},//"institutionId=" + option,
-						        //data: JSON.stringify(data),
-						        //dataType: 'json',
+						        //data: {},
+						        data: JSON.stringify(order),
+						        dataType: 'json',
 						        dataType:"text",
 						        success: function (data) {
 						            console.log("SUCCESS");
