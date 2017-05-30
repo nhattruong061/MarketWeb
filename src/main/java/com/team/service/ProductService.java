@@ -18,6 +18,12 @@ public interface ProductService {
     
     //lay object theo khoang price
     List<Product> findByPriceThan(int lessPrice, int greaterPrice);
+	//lay 10 phan tu dau theo kieu
+    List<Product> findByType(int id);
+    
+    List<Product> findByDescriptionContainingOrderByPriceDesc(String q);
+    
+	List<Product> findByDescriptionContainingOrderByPriceAsc(String q);
     
     Product findOne(int id);
 

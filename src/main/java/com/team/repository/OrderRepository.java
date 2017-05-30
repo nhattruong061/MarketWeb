@@ -15,8 +15,8 @@ import org.springframework.scheduling.annotation.Async;
 import com.team.domain.Order;
 
 public interface OrderRepository extends CrudRepository<Order, Integer> {
-	List<Order> findTop10ById(int id);
-
 	List<Order> findAllByIdUser(int id);
 	Page<Order> findAllByIdUser(int id, Pageable pageable);
+	List<Order> findTop10ById(int id);
+
 }

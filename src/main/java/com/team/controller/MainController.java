@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ import com.team.service.SaleService;
 import com.team.service.UserService;
 
 @Controller
-public class ContactController {
+public class MainController {
 	
 	@Autowired
 	private ContactService contactService;
@@ -49,6 +50,7 @@ public class ContactController {
 	//đăng kí đăng nhập
 		@GetMapping("/test")
 		public String index_page(Model model) {
+			model.addAttribute("search",new SearchProduct());
 			model.addAttribute("user", getUserLogin());
 			return "/test/index";
 		}
@@ -64,11 +66,11 @@ public class ContactController {
 			return "/test/403";
 		}
 		
-		@GetMapping("/test/login") 
+		/*@GetMapping("/market/login") 
 		public String getLogin() {
 			
-			return "/test/login";
-		}
+			return "/market/login";
+		}*/
 		
 		
 		@GetMapping("logout")
@@ -84,7 +86,8 @@ public class ContactController {
 		//
 	    @GetMapping("/market/login")
 	    public String login2(Model model) {
-	        return "login";
+	    	model.addAttribute("search",new SearchProduct());
+	    	return "login";
 	    }
 	    
 		@GetMapping("/login") 
@@ -105,12 +108,14 @@ public class ContactController {
 	
     @GetMapping("/admin")
     public String index_admin(Model model) {
-        return "admin/index";
+    	model.addAttribute("search",new SearchProduct());
+    	return "admin/index";
     }
     
     @GetMapping("/admin/login")
     public String admin_login(Model model) {
-        return "admin/login";
+    	model.addAttribute("search",new SearchProduct());
+    	return "admin/login";
     }
     
     //hàm này sẽ lấy người dùng đã đăng nhập và trả về đối tựng người dùng đó
@@ -120,35 +125,49 @@ public class ContactController {
     	User u=userDetailsService.findByEmail(name);
     	return u;
     }
+    @GetMapping("/market")
+    public String index(Model model) {
+    	model.addAttribute("search",new SearchProduct());
+    	model.addAttribute("user", getUserLogin());
+    	
+    	model.addAttribute("List1", productService.findTop10ByType(1) );
+        return "index";	
+    }
     
     @GetMapping("/market/create")
     public String create(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         model.addAttribute("contact", new Contact());
         return "form";
     }
     @GetMapping("/market/help")
     public String help(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "help";
     }
     @GetMapping("/market/card")
     public String card(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "card";
     }
     @GetMapping("/market/contact")
     public String contact(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "contact";
     }
     @GetMapping("/market/about")
     public String about(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "about";
     }
     @GetMapping("/market/faq")
     public String faq(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "faq";
     }
@@ -159,31 +178,37 @@ public class ContactController {
     }
     @GetMapping("/market/offers")
     public String offers(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "offers";
     }
     @GetMapping("/market/privacy")
     public String privacy(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "privacy";
     }
     @GetMapping("/market/signup")
     public String signup(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "signup";
     }
     @GetMapping("/market/sitemap")
     public String sitemap(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "sitemap";
     }
     @GetMapping("/market/value")
     public String value(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         return "value";
     }
     @GetMapping("/market/{id}/edit")
     public String edit(@PathVariable int id, Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("user", getUserLogin());
         model.addAttribute("contact", contactService.findOne(id));
         return "form";
@@ -211,6 +236,7 @@ public class ContactController {
         if (q.equals("")) {
             return "redirect:/market";
         }
+        model.addAttribute("search",new SearchProduct());
         model.addAttribute("user", getUserLogin());
         model.addAttribute("contacts", contactService.search(q));
         return "list";
@@ -218,6 +244,7 @@ public class ContactController {
     
     @GetMapping("/market/products")
     public String products(Model model) {
+    	model.addAttribute("search",new SearchProduct());
     	model.addAttribute("products",productService.findAll());
     	model.addAttribute("user", getUserLogin());
         return "products";
@@ -225,6 +252,7 @@ public class ContactController {
     
     @GetMapping("/market/{id}/single")
     public String single(@PathVariable int id, Model model) throws Exception {
+    	model.addAttribute("search",new SearchProduct());
     	Product p=new Product();
     	p=productService.findOne(id);
     	if(p.getIs_sale()==1)
@@ -331,20 +359,62 @@ public class ContactController {
  	    	}
     	return result;
     }
-    @PostMapping("/api/search")
-    public ResponseEntity<?> getSearchResultViaAjax(
-    		@RequestParam ("keysearchproduct") String search) {
-        List<Product> products = productService.search(search);
-        for (Product product : products) {
-	        if(product.getIs_sale()==1)
-	    	{
-	    		Sale s=new Sale();
-	    		int id=product.getId();
-	    		s=saleService.findByIdproduct(id);
-	    		product.setIs_sale(s.getPercent_sale());
-	    	}
-        }
-        return ResponseEntity.ok(products);
+    
+    /*@RequestMapping(value="/market/products/search",method = RequestMethod.POST)
+    public String searchName(@Valid SearchProduct search, BindingResult bindingResult, Model model){
+    	model.addAttribute("search",new SearchProduct());
+    	if (bindingResult.hasErrors()) {
+			return "/market";
+		}
+    	model.addAttribute("products",productService.search(search.getName()));
+    	model.addAttribute("user", getUserLogin());
+        return "products";
+
+    }*/
+    
+    @RequestMapping(value = "/market/products",method = RequestMethod.GET,produces="text/xml",params={"search"})
+    public String searchName(@RequestParam("search") String search, Model model) {
+    	model.addAttribute("products",productService.search(search));
+    	model.addAttribute("user", getUserLogin());
+    	return "products";
+    }
+    
+    @RequestMapping(value = "/market/products",method = RequestMethod.GET,produces="text/xml",params={"search","type"})
+    public String searchNameAndType(@RequestParam("search") String search, @RequestParam("type") int type, Model model) {
+    	model.addAttribute("products",productService.findByType(type));
+    	model.addAttribute("user", getUserLogin());
+    	return "products";
+    }
+    
+    @RequestMapping(value="/market/products/filter_and_brands",method = RequestMethod.POST)
+    public @ResponseBody List<Product> filterProducts(@Valid @RequestBody SearchProduct arrFilter){
+    	List<Product> result = new LinkedList<Product>();
+    	if(arrFilter.getFilter()>-1)
+    	{
+    		if(!arrFilter.getBrands().equals(-1))
+    		{
+    			if(arrFilter.getFilter()==0)
+    			{
+    				result=productService.findByDescriptionContainingOrderByPriceDesc(arrFilter.getBrands());
+    			}
+    			if(arrFilter.getFilter()==1)
+    			{
+    				result=productService.findByDescriptionContainingOrderByPriceAsc(arrFilter.getBrands());
+    			}
+    		}
+    		else
+    		{
+    			if(arrFilter.getFilter()==0)
+    			{
+    				result=productService.findByDescriptionContainingOrderByPriceDesc("");
+    			}
+    			if(arrFilter.getFilter()==1)
+    			{
+    				result=productService.findByDescriptionContainingOrderByPriceAsc("");
+    			}
+    		}
+    	}
+    	return result;
 
     }
 }

@@ -15,12 +15,7 @@ public interface OrderService extends Serializable {
     Iterable<Order> findAll();
 
     Order findOne(int id);
-    
-    static void AddOrder(Order order) {
-	}
-
     void save(Order order);
-
     void delete(int id);
     //Order findByEmail(String Email);
 
@@ -28,4 +23,5 @@ public interface OrderService extends Serializable {
     Page<Order> findAllByIdUser(int id, Pageable pageable);
     
     List<Order> findTop10ById(int id);
+
 }

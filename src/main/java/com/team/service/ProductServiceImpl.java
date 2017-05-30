@@ -52,6 +52,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	public List<Product> findByType(int id) {
+		// TODO Auto-generated method stub
+		return productRepository.findByType(id);
+	}
+	@Override
 	public List<Product> findTop8ByTypeOrderByViewDesc(int id) {
 		return  productRepository.findTop8ByTypeOrderByViewDesc(id);
 	}
@@ -65,4 +70,16 @@ public class ProductServiceImpl implements ProductService{
     public Product findByID_a(int id){
     	return productRepository.findByID_a(id);
     }*/
+	@Override
+	public List<Product> findByDescriptionContainingOrderByPriceDesc(String q) {
+		// TODO Auto-generated method stub
+		return productRepository.findByDescriptionContainingOrderByPriceDesc(q);
+	}
+
+	@Override
+	public List<Product> findByDescriptionContainingOrderByPriceAsc(String q) {
+		// TODO Auto-generated method stub
+		return productRepository.findByDescriptionContainingOrderByPriceAsc(q);
+	}
+
 }

@@ -17,24 +17,22 @@
 				<!-- //breadcrumbs -->
 				<div class="product-top">
 					<h4>Electronics</h4>
-					<ul> 
+					<ul id="filter"> 
 						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter By<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Low price</a></li> 
-								<li><a href="#">High price</a></li>
-								<li><a href="#">Latest</a></li> 
-								<li><a href="#">Popular</a></li> 
-							</ul> 
+							<select name="filter_by" id="filter_by" class="form-control1">
+								<option value="-1">Filter By</option>
+								<option value="0">Low price</option>
+								<option value="1">High price</option>
+							</select>
 						</li>
 						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Brands<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Samsung</a></li> 
-								<li><a href="#">LG</a></li>
-								<li><a href="#">Sony</a></li> 
-								<li><a href="#">Other</a></li> 
-							</ul> 
+							<select name="brands" id="brands" class="form-control1">
+								<option value="-1">Brands</option>
+								<option value="samsung">Samsung</option>
+								<option value="lg">LG</option>
+								<option value="sony">Sony</option>
+								<option value="other">Other</option>
+							</select>
 						</li>
 					</ul> 
 					<div class="clearfix"> </div>
@@ -201,17 +199,21 @@
     <div th:replace="layout :: popup-pay"></div>
 </body>
 <script type="text/javascript">
-
 $(document).ready(function () {
 
-	 $("#btnsearchproduct").click(function (event) {
+	 /*$("#btnsearchproduct").click(function (event) {
 
         //stop submit the form, we will post it manually.
         event.preventDefault();
         ajax_submit_search_product();
 
+    });*/
+    $('#filter').change(function(event){
+    	event.preventDefault();
+    	console.log('filter by :'+$('#filter_by :selected').val());
+    	console.log('brands :'+$('#brands :selected').val());
+    	ajax_filter_and_brands($('#filter_by :selected').val(), $('#brands :selected').val());
     });
-	
 	$('#checkbox_product input').change(function(){
 		var price = [];
 		$('#checkboxprice:checked').each(function(i){
@@ -226,6 +228,54 @@ $(document).ready(function () {
         ajax_search_product(price, sale);
 	});
 });
+
+function ajax_filter_and_brands(filter, brands){
+	var arrFilter= {};
+	arrFilter["filter"]=filter;
+	arrFilter["brands"]=brands;
+	console.log(arrFilter);
+	$.ajax({
+		type:"POST",
+		contentType: "application/json; charset=utf-8",
+		url:'/market/products/filter_and_brands',
+		data:JSON.stringify(arrFilter),
+		dataType : 'JSON',
+        cache: false,
+        timeout: 60000,
+		success:function(data){
+			var i;
+        	var count=parseInt(data.length);
+        	var html="";
+        	for (var i in data) {
+        		  var id= data[i]["id"];
+        		  var name= data[i]["name"];
+        		  var price= data[i]["price"];
+        		  var price_sale= (data[i]["price"]-(data[i]["price"]*data[i]["is_sale"])/100);
+        		  var main_image= data[i]["main_image"];
+        		  html+='<div class="col-md-3 product-grids">'+
+					'<div class="agile-products">'+
+						'<div class="new-tag"><h6>New</h6></div>'+
+						'<a href="/market/'+id+'/single.html"><img src="../../images/'+main_image+'" class="img-responsive" alt="'+main_image+'"></img></a>'+
+						'<div class="agile-product-text">'+             
+							'<h5><a href="/market/'+id+'/single">'+name+'</a></h5>'+
+							'<h6 ><del>$'+price+'</del> <i>$'+price_sale+'</i></h6>'+
+							'<form action="#" method="post">'+
+								'<input type="hidden" name="cmd" value="_cart" ></input>'+
+								'<input type="hidden" name="add" value="1" ></input>'+ 
+								'<input type="hidden" name="w3ls_item" value="Refrigerator" ></input>'+ 
+								'<input type="hidden" name="amount" value="$'+price_sale+'"></input>'+
+								'<button type="submit" class="w3ls-cart pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>'+
+							'</form>'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+				
+        	}
+        	console.log(data.length);
+        	$("#listproduct").html(html+'<div class="clearfix"> </div>');
+		}
+	});
+}
 
 function ajax_search_product(price, sale) {
 	var pr=[]
@@ -279,54 +329,6 @@ function ajax_search_product(price, sale) {
         error : function(e) {
             console.log("ERROR: ", e);
         }
-    });
-}
-function ajax_submit_search_product() {
-
-	var form = $('#form_searchproduct')[0];
-	var data = new FormData(form);
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/api/search",
-        data: data,
-        processData: false, //prevent jQuery from automatically transforming the data into a query string
-        contentType: false,
-        cache: false,
-        timeout: 60000,
-        success: function (data) {
-        	var i;
-        	var count=parseInt(data.length);
-        	var html="";
-        	for (var i in data) {
-        		  var id= data[i]["id"];
-        		  var name= data[i]["name"];
-        		  var price= data[i]["price"];
-        		  var price_sale= (data[i]["price"]-(data[i]["price"]*data[i]["is_sale"])/100);
-        		  var main_image= data[i]["main_image"];
-        		  html+='<div class="col-md-3 product-grids">'+
-					'<div class="agile-products">'+
-						'<div class="new-tag"><h6>New</h6></div>'+
-						'<a href="/market/'+id+'/single.html"><img src="../../images/'+main_image+'" class="img-responsive" alt="'+main_image+'"></img></a>'+
-						'<div class="agile-product-text">'+             
-							'<h5><a href="/market/'+id+'/single">'+name+'</a></h5>'+
-							'<h6 ><del>$'+price+'</del> <i>$'+price_sale+'</i></h6>'+
-							'<form action="#" method="post">'+
-								'<input type="hidden" name="cmd" value="_cart" ></input>'+
-								'<input type="hidden" name="add" value="1" ></input>'+ 
-								'<input type="hidden" name="w3ls_item" value="Refrigerator" ></input>'+ 
-								'<input type="hidden" name="amount" value="$'+price_sale+'"></input>'+
-								'<button type="submit" class="w3ls-cart pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>'+
-							'</form>'+
-						'</div>'+
-					'</div>'+
-				'</div>';
-				
-        	}
-        	console.log(data.length);
-        	$("#listproduct").html(html+'<div class="clearfix"> </div>');
-        },
     });
 
 }

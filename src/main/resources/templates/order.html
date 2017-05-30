@@ -11,7 +11,7 @@
 	    </div> -->
     	
     	<th:block th:if="${#lists.isEmpty(orders)}">
-		    <h3>No Result</h3>
+		    <h3>No orders</h3>
 		</th:block>
 		
         <th:block th:unless="${#lists.isEmpty(orders)}">
@@ -38,7 +38,7 @@
                             <td th:text="${order.address}"></td>
                             <td th:text="${order.phone}"></td>
                             <td th:text="${order.state}"></td>
-                            <td><a th:href="@{/market/delete_order_guest/{id}(id=${order.id})}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            <td><a th:href="@{/market/delete_order/{id}(id=${order.id})}"><span class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -48,8 +48,8 @@
         <div>
             <ul class='pagination pagination-centered'>
                 <li th:class="${page.firstPage}?'disabled':''">
-                <span th:if='${page.firstPage}'>← First</span>
-                <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>← First</a>
+                <span th:if='${page.firstPage}'> First</span>
+                <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'> First</a>
                 </li>
                 <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
                 <span th:if='${not page.hasPreviousPage}'>«</span>
@@ -64,8 +64,8 @@
                 <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}' title='Go to next page'>»</a>
                 </li>
                 <li th:class="${page.lastPage}? 'disabled' : ''">
-                <span th:if='${page.lastPage}'>Last →</span>
-                <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last →</a>
+                <span th:if='${page.lastPage}'>Last </span>
+                <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last</a>
                 </li>
             </ul>
         </div>

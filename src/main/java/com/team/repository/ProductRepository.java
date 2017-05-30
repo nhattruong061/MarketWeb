@@ -20,4 +20,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	//tim cac object thoa man dieu kien cua price
 	List<Product> findByPriceLessThanEqualAndPriceGreaterThan(int lessPrice, int greaterPrice);
+	List<Product> findByType(int id);
+	
+	List<Product> findByDescriptionContainingOrderByPriceDesc(String q);
+	
+	List<Product> findByDescriptionContainingOrderByPriceAsc(String q);
 }
