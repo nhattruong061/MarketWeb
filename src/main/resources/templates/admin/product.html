@@ -78,7 +78,7 @@ $('.toggle-btn').on('click', function (e) {
 		                          <td th:text="${product.is_sale}"></td>
 		                          <td th:text="${product.is_offer}"></td>
 		                          <td th:text="${product.id_coupon}"></td>
-		                          <td th:text="${product.main_image}"></td>
+		                          <td><img th:src="${'../../images/' + product.main_image}" alt="product_img" width="150"/></td>
 		                          <td><a th:href="@{./product/{id}/edit(id=${product.id})}"><span class="glyphicon glyphicon-pencil"></span></a></td>
 		                          <td><a th:href="@{./product/{id}/delete(id=${product.id})}"><span class="glyphicon glyphicon-trash"></span></a></td>
 		                        </tr>

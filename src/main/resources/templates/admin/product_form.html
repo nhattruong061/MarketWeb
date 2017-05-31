@@ -38,7 +38,7 @@ $('.toggle-btn').on('click', function (e) {
 							<div class="form-group">
 								<label for="focusedinput" class="col-sm-2 control-label">Name</label>
 								<div class="col-sm-8">
-									<input type="text" class="form-control1" name="name" id="name" placeholder="Default Input" th:field="*{name}" th:errorclass="field-error"/>
+									<input type="text" class="form-control1" name="name" id="name" placeholder="Name of product" th:field="*{name}" th:errorclass="field-error"/>
 									<em th:if="*{#fields.hasErrors('name')}" th:errors="*{name}"></em>
 								</div>
 							</div>
@@ -63,8 +63,9 @@ $('.toggle-btn').on('click', function (e) {
 								<label for="selector1" class="col-sm-2 control-label">Type</label>
 								<div class="col-sm-8">
 									<select name="type" id="type" class="form-control1" th:field="*{type}" th:errorclass="field-error">
-										<option value="1">Linh kiện</option>
-										<option value="2">Trang trí</option>
+										<option value="1">Samsung</option>
+										<option value="2">Nokia</option>
+										<option value="3">Khác...</option>
 									</select>
 									<em th:if="*{#fields.hasErrors('type')}" th:errors="*{type}"></em>
 								</div>

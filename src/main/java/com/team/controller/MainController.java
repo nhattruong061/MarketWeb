@@ -131,6 +131,8 @@ public class MainController {
     	model.addAttribute("user", getUserLogin());
     	
     	model.addAttribute("List1", productService.findTop10ByType(1) );
+    	model.addAttribute("List2", productService.findTop10ByType(2) );
+    	model.addAttribute("List3", productService.findTop10ByType(3) );
         return "index";	
     }
     

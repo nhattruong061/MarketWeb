@@ -43,12 +43,23 @@
 							</ul>	
 						</div> 
 						<p class="single-price-text" th:text="${product.description}">Fusce a egestas nibh, eget ornare erat. Proin placerat, urna et consequat efficitur, sem odio blandit enim, sit amet euismod turpis est mattis lectus. Vestibulum maximus quam et quam egestas imperdiet. In dignissim auctor viverra. </p>
-						<form action="#" method="post">
-							<input type="hidden" name="cmd" value="_cart" ></input>
-							<input type="hidden" name="add" value="1" > </input>
-							<input type="hidden" name="w3ls_item" value="Snow Blower" th:value="${product.name}"> </input>
-							<input type="hidden" name="amount" value="540.00" th:value="${product.price}-(${product.price}*${product.is_sale})/100"> </input>
-							<button type="submit" class="w3ls-cart" ><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+						<script src="../js/minicart.min.js"></script>
+<script>
+    	paypal.minicart.render();
+</script>	
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+									<input type="hidden" name="add" value="1"/>
+									<input type="hidden" name="business" value=""/>
+									<input type="hidden" name="item_name" th:attr="value=${product.name}"/>
+									<input type="hidden" name="item_number" th:attr="value=${product.id}"/>
+									<input type="hidden" name="amount" th:value="${product.price}-(${product.price}*${product.is_sale})/100"/>
+									<input type="hidden" name="shipping" value="00"/>
+									<input type="hidden" name="shipping2" value="50"/>
+									<input type="hidden" name="handling" value="2.00 "/>
+									<input type="hidden" name="currency_code" value="USD"/>
+									<input type="hidden" name="return" value=""/>
+									<input type="hidden" name="undefined_quantity" value="1"/>
+						<button type="submit" name="submit" class="w3ls-cart" ><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
 						</form>
 						<form action="#" method="POST" name="form_Add_Whistlist" id="form_Add_Whistlist">
 							<input type="hidden" name="idUser" id="idUser" value="1"/>
